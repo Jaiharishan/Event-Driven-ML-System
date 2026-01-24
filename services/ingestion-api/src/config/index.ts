@@ -5,7 +5,7 @@ export const config = {
   port: Number(process.env.PORT) || 3000,
 
   kafka: {
-    brokers: (getEnv('KAFKA_BROKERS') || 'localhost:9092').split(','),
+    brokers: (getEnv('KAFKA_BROKERS') || 'kafka:9092').split(','),
     clientId: 'ingestion-api'
   }
 };
