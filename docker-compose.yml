@@ -31,6 +31,8 @@ services:
   ingestion-service:
     build: ./services/ingestion-api
     container_name: ingestion-api
+    env_file:
+      - .env
     depends_on:
       - kafka
     ports:
@@ -46,9 +48,11 @@ services:
     environment:
       KAFKA_BROKER: kafka:9092
 
-  result-service:
+  results-service:
     build: ./services/results-service
     container_name: results-service
+    env_file:
+      - .env
     depends_on:
       - kafka
     ports:
