@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from 'express';
 import bodyParser from 'body-parser';
 import classifyRoute from './routes/classify';
@@ -6,6 +7,7 @@ import { register } from './metrics/prometheus';
 import { config } from './config';
 
 async function start() {
+  console.log("KAFKA_BROKER =", process.env.KAFKA_BROKERS);
   await connectProducer();
 
   const app = express();

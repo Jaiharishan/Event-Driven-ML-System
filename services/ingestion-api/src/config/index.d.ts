@@ -1,6 +1,6 @@
 export declare const config: {
     serviceName: string;
-    port: number;
+    port: string | number;
     kafka: {
         brokers: string[];
         clientId: string;

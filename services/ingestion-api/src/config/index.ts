@@ -2,10 +2,10 @@ import { getEnv } from './getEnv';
 
 export const config = {
   serviceName: 'ingestion-api',
-  port: 3000,
+  port: getEnv('PORT') || 3000,
 
   kafka: {
-    brokers: ('kafka:9092').split(','),
+    brokers: (getEnv('KAFKA_BROKERS') || 'kafka:9092').split(','),
     clientId: 'ingestion-api'
   }
 };
