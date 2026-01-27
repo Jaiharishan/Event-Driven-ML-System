@@ -38,7 +38,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      KAFKA_BROKER: kafka:9092
+      KAFKA_BROKERS: kafka:9092
 
   ml-inference-service:
     build: ./services/ml-inference
@@ -46,7 +46,7 @@ services:
     depends_on:
       - kafka
     environment:
-      KAFKA_BROKER: kafka:9092
+      KAFKA_BROKERS: kafka:9092
 
   results-service:
     build: ./services/results-service
@@ -58,4 +58,4 @@ services:
     ports:
       - "4000:4000"
     environment:
-      KAFKA_BROKER: kafka:9092
+      KAFKA_BROKERS: kafka:9092
