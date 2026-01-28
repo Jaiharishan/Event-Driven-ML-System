@@ -1,22 +1,29 @@
 import { NextResponse } from 'next/server';
 
-const RESULTS_BASE_URL = "http://localhost:4000";
-// example: http://localhost:4000
+const RESULTS_BASE_URL = 'http://localhost:4000';
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { jobId: string } }
+  req: Request,
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
-  try {
-    const res = await fetch(
-      `${RESULTS_BASE_URL}/api/results/${params.jobId}`
-    );
+  const { jobId } = await params;
 
-    const data = await res.json();
+  const url = `${RESULTS_BASE_URL}/api/results/${jobId}`;
+  console.log('[PROXY] Fetching:', url);
+
+  try {
+    const res = await fetch(url, {
+      cache: 'no-store',
+    });
+
+    const data = await res.json(); // ✅ read ONCE
+
+    console.log('[PROXY] Status:', res.status);
+    console.log('[PROXY] Data:', data);
 
     return NextResponse.json(data, { status: res.status });
-  } catch (error) {
-    console.error('Proxy results error:', error);
+  } catch (err) {
+    console.error('[PROXY] Error:', err);
     return NextResponse.json(
       { error: 'Failed to fetch results' },
       { status: 500 }

@@ -20,11 +20,14 @@ export default function HomePage() {
       try {
         const res = await fetch(`/api/results/${jobId}`);
         const data = await res.json();
+        console.log('Fetched results:', data);
+        console.log('jobId:', jobId);
 
         setStatus(data.status);
 
         if (data.status === 'completed' || data.status === 'failed') {
           setResult(data);
+          console.log('Polled status:', data);
           clearInterval(interval);
         }
       } catch (err) {
@@ -55,7 +58,7 @@ export default function HomePage() {
       }
 
       const data = await res.json();
-      setJobId(data.jobId);
+      setJobId(data.job_id);
       setStatus(data.status);
     } catch (err) {
       console.error(err);
