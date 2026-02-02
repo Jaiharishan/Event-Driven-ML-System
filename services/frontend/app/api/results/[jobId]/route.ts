@@ -9,7 +9,7 @@ export async function GET(
   const { jobId } = await params;
 
   const url = `${RESULTS_BASE_URL}/api/results/${jobId}`;
-  console.log('[PROXY] Fetching:', url);
+//   console.log('[PROXY] Fetching:', url);
 
   try {
     const res = await fetch(url, {
@@ -18,8 +18,8 @@ export async function GET(
 
     const data = await res.json(); // ✅ read ONCE
 
-    console.log('[PROXY] Status:', res.status);
-    console.log('[PROXY] Data:', data);
+    // console.log('[PROXY] Status:', res.status);
+    // console.log('[PROXY] Data:', data);
 
     return NextResponse.json(data, { status: res.status });
   } catch (err) {

@@ -30,7 +30,7 @@ services:
 
   ingestion-service:
     build: ./services/ingestion-api
-    container_name: ingestion-api
+    # container_name: ingestion-api
     env_file:
       - .env
     depends_on:

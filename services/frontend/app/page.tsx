@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { pollResult } from './lib/pollResult';
 
 type JobStatus = 'accepted' | 'processing' | 'completed' | 'failed';
 
@@ -16,28 +17,19 @@ export default function HomePage() {
   useEffect(() => {
     if (!jobId) return;
 
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`/api/results/${jobId}`);
-        const data = await res.json();
-        console.log('Fetched results:', data);
-        console.log('jobId:', jobId);
-
+    pollResult(
+      jobId,
+      (data) => {
         setStatus(data.status);
-
-        if (data.status === 'completed' || data.status === 'failed') {
+        if (data.status === 'completed') {
           setResult(data);
-          console.log('Polled status:', data);
-          clearInterval(interval);
         }
-      } catch (err) {
-        console.error(err);
-        setError('Failed to fetch results');
-        clearInterval(interval);
+      },
+      (errMsg) => {
+        setError(errMsg);
       }
-    }, 2000);
+    );
 
-    return () => clearInterval(interval);
   }, [jobId]);
 
   async function submitJob() {
