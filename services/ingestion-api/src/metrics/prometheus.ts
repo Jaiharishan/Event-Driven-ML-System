@@ -1,18 +1,18 @@
 import client from 'prom-client';
 
-export const register = new client.Registry();
-client.collectDefaultMetrics({ register });
+client.collectDefaultMetrics();
 
-export const requestsCounter = new client.Counter({
-  name: 'ingestion_requests_total',
-  help: 'Total ingestion requests',
-  registers: [register]
+export const httpRequestsTotal = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total HTTP requests',
+  labelNames: ['method', 'route', 'status'],
 });
 
-export const kafkaProduceLatency = new client.Histogram({
-  name: 'kafka_produce_latency_ms',
-  help: 'Kafka produce latency',
-  buckets: [5, 10, 25, 50, 100, 200],
-  registers: [register]
+export const httpRequestDuration = new client.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'HTTP request latency',
+  labelNames: ['method', 'route'],
+  buckets: [0.05, 0.1, 0.2, 0.5, 1, 2, 5],
 });
 
+export const register = client.register;

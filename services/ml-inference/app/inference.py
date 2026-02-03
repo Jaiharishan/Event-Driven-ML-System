@@ -1,5 +1,6 @@
 import time
 import random
+from app.metrics import jobs_processed, inference_latency
 
 def run_inference(image_uri: str):
     """
@@ -7,6 +8,12 @@ def run_inference(image_uri: str):
     Replace with real ML later without changing Kafka code.
     """
     start = time.time()
+
+    # run inference
+    duration = time() - start
+
+    jobs_processed.inc()
+    inference_latency.observe(duration)
 
     # simulate compute
     time.sleep(0.05)
