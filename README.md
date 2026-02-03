@@ -14,21 +14,7 @@ It is designed as a **learning + portfolio project** that shows:
 
 ## 🧠 High-Level Architecture
 
-```
-Frontend (Next.js)
-      ↓ HTTP
-Ingestion API (Node.js)
-      ↓ Kafka (produce)
-Kafka Topic: image.classification.requested
-      ↓ Kafka (consume)
-ML Inference Service (Python)
-      ↓ Kafka (produce)
-Kafka Topic: image.classification.completed
-      ↓ Kafka (consume)
-Results Service (Node.js)
-      ↓ HTTP
-Frontend polls results
-```
+![High Level Architecture](./public/system_diagram.png)
 
 ---
 
